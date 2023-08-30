@@ -1,0 +1,112 @@
+class employee: 
+    def __init__(self, cod,nme,sal):
+        self.code = cod
+        self.name = nme
+        self.salary = sal
+    
+    def empinfo(self):
+        print("Code: ", self.code)
+        print("Name: ", self.name)
+        print("Basic Salary: ", self.salary)
+
+
+class executive(employee): 
+    def __init__(self,c,n,s):
+        super().__init__(c,n,s)
+        
+    def execallowances(self):
+        self.cca = self.salary*25/100
+        self.hra = self.salary*15/100 
+ 
+    def execinfo(self):
+        super().empinfo()
+        print("City Compensatory Allowance: ", self.cca)
+        print("House Rent Allowance: ", self.hra)
+     
+ 
+class officer(employee): 
+    def __init__(self,c,n,s):
+        super().__init__(c,n,s)
+        
+    def offallowances(self):
+        self.ma = self.salary*30/100
+        self.ca = self.salary*20/100 
+        
+    def officerinfo(self):
+        super().empinfo()
+        print("Medical Allowance: ", self.ma)
+        print("Conveyance Allowance: ", self.ca)
+       
+ 
+class manager(executive,officer): 
+    def __init__(self,c,n,s):
+        super().__init__(c,n,s)
+        
+    def manallowances(self):
+        executive.execallowances(self)
+        officer.offallowances(self)	
+
+    def managerinfo(self):
+        executive.execinfo(self)
+        print("Medical Allowance: ", self.ma)
+        print("Conveyance Allowance: ", self.ca)
+        
+execobj=executive(101, "Bintu", 1000)
+execobj.execallowances()
+officerobj=officer(102, "Chirag", 1000)
+officerobj.offallowances()
+managerobj=manager(103, "Naman", 1000)
+managerobj.manallowances()
+print("\nSalary information of executive is: ")
+execobj.execinfo()
+print("\nSalary information of officer is: ")
+officerobj.officerinfo()
+print("\nSalary information of manager is: ")
+managerobj.managerinfo()
+
+
+class theorysub: 
+    def __init__(self,h,e):
+        self.hindi = h
+        self.english = e
+
+    def dispTheory(self):
+        print("Hindi Marks:", self.hindi)
+        print("English Marks:", self.english)
+
+class practicalsub: 
+    def __init__(self,p,d):
+        self.phyTraining = p
+        self.danceMusic = d
+
+    def dispPractical(self):
+        print("Physical Training Marks:", self.phyTraining)
+        print("dance/Music Marks:", self.danceMusic)
+
+class student(theorysub, practicalsub): 
+    def __init__(self,r,n,p,m,pt,dm):
+        self.roll = r
+        self.name = n
+        theorysub.__init__(self,p,m)
+        practicalsub.__init__(self,pt, dm)
+
+    def dispstudent(self):
+        print("Roll number:", self.roll)
+        print("Name:", self.name)
+        theorysub.dispTheory(self)
+        practicalsub.dispPractical(self)
+
+class result(student): 
+    def __init__(self,r,n,p,m,pt,dm):
+        super().__init__(r,n,p,m,pt,dm)
+        self.total = self.hindi + self.english + self.phyTraining + self.danceMusic
+        self.percentage = self.total/4
+        
+    def dispresult(self):
+        super().dispstudent()
+        print("Total marks:", self.total)
+        print("Percentage:", self.percentage, "%")
+        
+resultobj=result(101,"Bintu",70,80,75,85)
+print("Student result card is:")
+resultobj.dispresult()
